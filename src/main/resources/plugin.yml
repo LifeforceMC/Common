@@ -1,0 +1,21 @@
+name: LifeforceCommon
+main: dev.piny.lifeforce.common.LifeforceCommon
+version: "${version}"
+api-version: "1.21"
+
+depend:
+  - CommandAPI
+  - PineLib
+
+commands:
+  lifeforce:
+    description: Lifeforce administration commands
+    usage: /lifeforce <subcommand>
+
+permissions:
+  lifeforce.admin:
+    description: Access to Lifeforce admin commands
+    default: op
+  lifeforce.invsee:
+    description: View another player's inventory via UI
+    default: op

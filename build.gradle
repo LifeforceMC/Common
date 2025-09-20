@@ -1,0 +1,46 @@
+plugins {
+    id 'java'
+}
+
+group = 'dev.piny.lifeforce'
+version = '0.1.0'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+    withSourcesJar()
+}
+
+repositories {
+    mavenCentral()
+    maven { url = 'https://repo.papermc.io/repository/maven-public/' }
+    maven { url = 'https://jitpack.io' } // For PineLib via JitPack
+}
+
+dependencies {
+    // Paper API
+    compileOnly 'io.papermc.paper:paper-api:1.21.1-R0.1-SNAPSHOT'
+
+    // CommandAPI (plugin provided at runtime)
+    compileOnly 'dev.jorel:commandapi-bukkit-core:9.5.0'
+
+    // PineLib (provided at runtime; required dependency; Commit: 1f60823)
+    compileOnly 'com.github.NotPiny:PineLib:1f60823'
+
+    // Annotations (optional)
+    compileOnly 'org.jetbrains:annotations:24.1.0'
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+processResources {
+    filteringCharset = 'UTF-8'
+    filesMatching('plugin.yml') {
+        expand(
+                'version': project.version
+        )
+    }
+}
