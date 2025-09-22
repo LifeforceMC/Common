@@ -70,7 +70,7 @@ public class InvSeePlayer implements Listener {
             view.set(r + 1, MenuItem.of(inv.getChestplate()    != null ? inv.getChestplate().clone()    : new ItemStack(Material.AIR)));
             view.set(r + 2, MenuItem.of(inv.getLeggings()      != null ? inv.getLeggings().clone()      : new ItemStack(Material.AIR)));
             view.set(r + 3, MenuItem.of(inv.getBoots()         != null ? inv.getBoots().clone()         : new ItemStack(Material.AIR)));
-            view.set(r + 8, MenuItem.of(inv.getItemInOffHand() != null ? inv.getItemInOffHand().clone() : new ItemStack(Material.AIR)));
+            view.set(r + 8, MenuItem.of(inv.getItemInOffHand().clone()));
 
             view.show(player);
         }));
