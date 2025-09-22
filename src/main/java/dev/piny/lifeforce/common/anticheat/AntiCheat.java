@@ -2,6 +2,7 @@ package dev.piny.lifeforce.common.anticheat;
 
 import dev.piny.lifeforce.common.LifeforceCommon;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.command.BlockCommandSender;
 import org.bukkit.entity.Player;
@@ -23,7 +24,7 @@ public class AntiCheat implements Listener {
     private static final String[] WHITELISTED_COMMANDS = new String[] {
             "msg", "tell", "w", "tpa", "voicechat", "dvc", "discord", "sethome", "home",
             "delhome", "hearts", "spawn", "book", "lifeforce timer", "lifeforce commandlink",
-            "say", "tellraw", "vanish", "co", "vinvsee", "sit", "treeminer"
+            "say", "tellraw", "vanish", "co", "vinvsee", "sit", "treeminer", "afk"
     };
 
     private final LifeforceCommon plugin;
@@ -71,7 +72,7 @@ public class AntiCheat implements Listener {
         Player sender = event.getPlayer();
         if (!shouldBroadcastCommand(command, sender.getUniqueId())) return;
 
-        broadcastAndNotify(sender.getName(), command);
+        broadcastAndNotify(sender.getName(), command, sender.isOp());
     }
 
     @EventHandler
@@ -82,11 +83,18 @@ public class AntiCheat implements Listener {
         if (!shouldBroadcastCommand(command, null)) return;
 
         String sender = event.getSender().getName();
-        broadcastAndNotify(sender, command);
+        broadcastAndNotify(sender, command, true);
     }
 
-    private void broadcastAndNotify(String sender, String command) {
+    private void broadcastAndNotify(String sender, String command, boolean isOp) {
         Bukkit.broadcast(Component.text(sender + " just ran a command: " + command));
-        plugin.sendDiscordMessage("{\"content\": \"**" + sender + "** ran: `" + command.replace("\"","\\\"") + "`\"}", "commandbroadcast");
+
+        if (!plugin.getConfig().contains("commandbroadcast.webhook", true)) {
+            Bukkit.broadcast(Component.text("Warning: Not currently broadcasting commands to discord (webhook not set)").color(NamedTextColor.YELLOW));
+            return;
+        }
+
+        // Don't currently have the role ids on hand
+        plugin.sendDiscordMessage("{\"content\": \"<@&[INSERT ROLE ID HERE]>" + (isOp ? " <@&[INSERT OP ROLE PING HERE]>" : " ")  + "**" + sender + "** ran: `" + command.replace("\"","\\\"") + "`\"}", "commandbroadcast");
     }
 }
