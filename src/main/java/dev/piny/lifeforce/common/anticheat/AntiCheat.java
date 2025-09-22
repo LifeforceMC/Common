@@ -94,7 +94,6 @@ public class AntiCheat implements Listener {
             return;
         }
 
-        // Don't currently have the role ids on hand
-        plugin.sendDiscordMessage("{\"content\": \"<@&[INSERT ROLE ID HERE]>" + (isOp ? " <@&[INSERT OP ROLE PING HERE]>" : " ")  + "**" + sender + "** ran: `" + command.replace("\"","\\\"") + "`\"}", "commandbroadcast");
+        plugin.sendDiscordMessage("{\"content\": \"<@&1411479998665199788>" + (isOp ? " <@&1419094156239835136>" : " ")  + "**" + sender + "** ran: `" + command.replace("\"","\\\"") + "`\"}", "commandbroadcast");
     }
 }

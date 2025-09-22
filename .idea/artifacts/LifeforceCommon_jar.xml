@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="LifeforceCommon:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/LifeforceCommon_jar</output-path>
+    <root id="archive" name="LifeforceCommon.jar">
+      <element id="module-output" name="LifeforceCommon.main" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/main/resources/plugin.yml" />
+    </root>
+  </artifact>
+</component>
